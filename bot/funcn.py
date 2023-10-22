@@ -77,13 +77,13 @@ async def progress(current, total, event, start, type_of_ps, file=None):
         speed = current / diff
         time_to_completion = round((total - current) / speed) * 1000
         progress_str = "{0}{1}** {2}%**\n\n".format(
-            "".join(["●" for i in range(math.floor(percentage / 10))]),
-            "".join(["○" for i in range(10 - math.floor(percentage / 10))]),
+            "".join(["■" for i in range(math.floor(percentage / 10))]),
+            "".join(["□" for i in range(10 - math.floor(percentage / 10))]),
             round(percentage, 2),
         )
         tmp = (
             progress_str
-            + "** Progress:** {0} \n\n** Total Size:** {1}\n\n** Speed:** {2}/s\n\n** Time Left:** {3}\n".format(
+            + "** Progress:** {0} \n\n** 🗂Total Size:** {1}\n\n** 🚀 Speed:** {2}/s\n\n** ⏳️Time Left:** {3}\n".format(
                 hbs(current),
                 hbs(total),
                 hbs(speed),
@@ -139,7 +139,7 @@ async def info(file, event):
     stdout, stderr = process.communicate()
     out = stdout.decode()
     client = TelegraphPoster(use_api=True)
-    client.create_api_token("TGVid-Comp-Mediainfo")
+    client.create_api_token("v-encoder-Mediainfo")
     page = client.post(
         title="TGVid-Comp-Mediainfo",
         author=((await event.client.get_me()).first_name),
@@ -185,7 +185,7 @@ async def skip(e):
 async def renew(e):
     if str(e.sender_id) not in OWNER and event.sender_id !=DEV:
         return
-    await e.reply("**Cleared Queued, Working Files and Cached Downloads!**")
+    await e.reply("**✅️Cleared Queued, Working Files and Cached Downloads!**")
     WORKING.clear()
     QUEUE.clear()
     os.system("rm -rf downloads/*")
@@ -218,7 +218,7 @@ async def getlogs(e):
 async def getthumb(e):
     if str(e.sender_id) not in OWNER and event.sender_id !=DEV:
         return
-    await e.client.send_file(e.chat_id, file="/bot/thumb.jpg", force_document=False, caption="**Your Current Thumbnail.**")
+    await e.client.send_file(e.chat_id, file="/bot/thumb.jpg", force_document=False, caption="**Your Current Thumbnail🖼.**")
 
 
 async def getcode(e):
@@ -231,7 +231,7 @@ async def getcode(e):
 async def clearqueue(e):
     if str(e.sender_id) not in OWNER and event.sender_id !=DEV:
         return
-    await e.reply("**Cleared Queued Files!**")
+    await e.reply("**✅️Cleared Queued Files!**")
     QUEUE.clear()
     return
 
@@ -245,7 +245,7 @@ async def fast_download(e, download_url, filename=None):
                     t,
                     e,
                     time.time(),
-                    f"** Downloading video from {download_url}**",
+                    f"** 📥 Downloading video from {download_url}**",
                 )
             ),
         )
