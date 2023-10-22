@@ -20,7 +20,7 @@ async def stats(e):
     except Exception as er:
         LOGS.info(er)
         await e.answer(
-            "Someting Went Wrong.\nSend Media Again.", cache_time=0, alert=True
+            "Someting Went Wrong ❗️.\nSend Media Again.", cache_time=0, alert=True
         )
 
 
@@ -39,10 +39,10 @@ async def dl_link(event):
         return
     if WORKING or QUEUE:
         QUEUE.update({link: name})
-        return await event.reply(f"** Added {link} in QUEUE**")
+        return await event.reply(f"** Added {link} in QUEUE 🗂 **")
     WORKING.append(1)
     s = dt.now()
-    xxx = await event.reply("** Downloading...**")
+    xxx = await event.reply("** 📥 Downloading...**")
     try:
         dl = await fast_download(xxx, link, name)
     except Exception as er:
@@ -61,7 +61,7 @@ async def dl_link(event):
     hehe = f"{out};{dl};0"
     wah = code(hehe)
     nn = await xxx.edit(
-        "**🗜 Compressing...**",
+        "**📂 Compressing...**",
         buttons=[
             [Button.inline("STATS", data=f"stats{wah}")],
             [Button.inline("CANCEL", data=f"skip{wah}")],
@@ -75,7 +75,7 @@ async def dl_link(event):
     er = stderr.decode()
     try:
         if er:
-            await xxx.edit(str(er) + "\n\n**ERROR**")
+            await xxx.edit(str(er) + "\n\n**ERROR ❗️**")
             WORKING.clear()
             os.remove(dl)
             return os.remove(out)
@@ -84,14 +84,14 @@ async def dl_link(event):
     ees = dt.now()
     ttt = time.time()
     await nn.delete()
-    nnn = await xxx.client.send_message(xxx.chat_id, "** Uploading...**")
+    nnn = await xxx.client.send_message(xxx.chat_id, "**📤 Uploading...**")
     with open(out, "rb") as f:
         ok = await upload_file(
             client=xxx.client,
             file=f,
             name=out,
             progress_callback=lambda d, t: asyncio.get_event_loop().create_task(
-                progress(d, t, nnn, ttt, "** Uploading...**")
+                progress(d, t, nnn, ttt, "**📤 Uploading...**")
             ),
         )
     await nnn.delete()
@@ -123,7 +123,7 @@ async def encod(event):
             return
         event.sender
         if str(event.sender_id) not in OWNER and event.sender_id !=DEV:
-            return await event.reply("**Sorry You're not An Authorised User!**")
+            return await event.reply("**❗️Sorry You're not An Authorised User!**")
         if not event.media:
             return
         if hasattr(event.media, "document"):
@@ -134,20 +134,20 @@ async def encod(event):
         else:
             return
         if WORKING or QUEUE:
-            xxx = await event.reply("**Adding To Queue...**")
+            xxx = await event.reply("**Adding To Queue🗂...**")
             # id = pack_bot_file_id(event.media)
             doc = event.media.document
             if doc.id in list(QUEUE.keys()):
-                return await xxx.edit("**This File is Already Added in Queue**")
+                return await xxx.edit("**❗️This File is Already Added in Queue🗂**")
             name = event.file.name
             if not name:
                 name = "video_" + dt.now().isoformat("_", "seconds") + ".mp4"
             QUEUE.update({doc.id: [name, doc]})
             return await xxx.edit(
-                "**Added This File in Queue**"
+                "**✅️ Added This File in Queue❎️**"
             )
         WORKING.append(1)
-        xxx = await event.reply("** Downloading...**")
+        xxx = await event.reply("** 📥 Downloading...**")
         s = dt.now()
         ttt = time.time()
         dir = f"downloads/"
@@ -169,7 +169,7 @@ async def encod(event):
                                 t,
                                 xxx,
                                 ttt,
-                                f"** Downloading**\n__{filename}__",
+                                f"** 📥 Downloading**\n__{filename}__",
                             )
                         ),
                     )
@@ -178,7 +178,7 @@ async def encod(event):
                     event.media,
                     dir,
                     progress_callback=lambda d, t: asyncio.get_event_loop().create_task(
-                        progress(d, t, xxx, ttt, f"** Downloading**\n__{filename}__")
+                        progress(d, t, xxx, ttt, f"** 📥 Downloading**\n__{filename}__")
                     ),
                 )
         except Exception as er:
@@ -212,7 +212,7 @@ async def encod(event):
         er = stderr.decode()
         try:
             if er:
-                await e.edit(str(er) + "\n\n**ERROR**")
+                await e.edit(str(er) + "\n\n**❗️ERROR**")
                 WORKING.clear()
                 os.remove(dl)
                 return os.remove(out)
@@ -221,14 +221,14 @@ async def encod(event):
         ees = dt.now()
         ttt = time.time()
         await nn.delete()
-        nnn = await e.client.send_message(e.chat_id, "** Uploading...**")
+        nnn = await e.client.send_message(e.chat_id, "** 📤 Uploading...**")
         with open(out, "rb") as f:
             ok = await upload_file(
                 client=e.client,
                 file=f,
                 name=out,
                 progress_callback=lambda d, t: asyncio.get_event_loop().create_task(
-                    progress(d, t, nnn, ttt, f"** Uploading**\n__{out.replace(f'encode/', '')}__")
+                    progress(d, t, nnn, ttt, f"**📤 Uploading**\n__{out.replace(f'encode/', '')}__")
                 ),
             )
         await nnn.delete()
@@ -242,7 +242,7 @@ async def encod(event):
         xxx = ts(int((eees - ees).seconds) * 1000)
         a1 = await info(dl, e)
         a2 = await info(out, e)
-        dk = f"<b>File Name:</b> {newFile}\n\n<b>Original File Size:</b> {hbs(org)}\n<b>Encoded File Size:</b> {hbs(com)}\n<b>Encoded Percentage:</b> {per}\n\n<b>Get Mediainfo Here:</b> <a href='{a1}'>Before</a>/<a href='{a2}'>After</a>\n\n<i>Downloaded in {x}\nEncoded in {xx}\nUploaded in {xxx}</i>"
+        dk = f"<b>File Name:</b> {newFile}\n\n<b>Original File Size:</b> {hbs(org)}Encoded File Size:</b> {hbs(com)}\n<b>Encoded Percentage:</b> {per}\n\n<b>Get Mediainfo Here:</b> <a href='{a1}'>Before</a>/<a href='{a2}'>After</a>\n\n<i>Downloaded in {x}\nEncoded in {xx}\nUploaded in {xxx}</i>"
         ds = await e.client.send_file(
             e.chat_id, file=ok, force_document=True, caption=dk, link_preview=False, thumb=thum, parse_mode="html"
         )
